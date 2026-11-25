@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de contratos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+  <main class="contenedor">
+    <section class="panel">
+      <h1>Generador de contratos</h1>
+      <p>Captura los datos del cliente y del crédito. El sistema generará el PDF, intentará enviarlo al correo indicado y descargará el mismo archivo.</p>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      <form action="/contrato" method="POST">
+        <h2>Datos del cliente</h2>
+        <label>Nombre completo
+          <input name="nombre_cliente" type="text" minlength="3" maxlength="120" required>
+        </label>
+        <label>Identificación
+          <input name="identificacion" type="text" minlength="4" maxlength="40" required>
+        </label>
+        <label>Correo electrónico
+          <input name="correo" type="email" required>
+        </label>
+        <h2>Datos del crédito</h2>
+        <label>Monto del crédito (MXN)
+          <input name="monto" type="number" min="0.01" step="0.01" required>
+        </label>
+        <label>Tasa anual (%)
+          <input name="tasa_anual" type="number" min="0" max="100" step="0.01" required>
+        </label>
+        <label>Plazo (meses)
+          <input name="plazo_meses" type="number" min="1" max="600" step="1" required>
+        </label>
+        <button type="submit">Generar PDF, enviar por Gmail y descargar</button>
+      </form>
+      <p class="nota">Para enviar el correo, configura SMTP en las variables de entorno de Windows. El PDF es un formato académico de ejemplo y requiere revisión legal antes de usarse como contrato real.</p>
+      <a href="/docs">Consultar documentación de la API</a>
+    </section>
+  </main>
+</body>
+</html>
